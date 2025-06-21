@@ -38,14 +38,15 @@ function App() {
           path="/transactions"
           element={
             <Transactions
-              transaction={transactions}
+              transactions={transactions}
               addTransaction={addTransaction}
               deleteTransaction={deleteTransaction}
               editTransaction={editTransaction}
             />
           }
         />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard transactions={transactions}/>} />
+
       </Routes>
     </Router>
   );
