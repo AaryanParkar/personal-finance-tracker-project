@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
+import { useTransaction } from "../context/TransactionContext";
 
-const TransactionForm = ({ addTransaction }) => {
+const TransactionForm = () => {
+  const {addTransaction} = useTransaction();
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [type, setType] = useState("income"); // Default to income

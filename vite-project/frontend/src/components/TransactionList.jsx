@@ -11,7 +11,7 @@
 //                <ul className="flex flex-col gap-2 mt-4">
 //           {transactions.map((t) => (
 //             <li
-//               key={t.id}
+//               key={t._id}
 //               className="border p-3 rounded shadow-sm flex justify-between items-center"
 //             >
 //               <div>
@@ -29,7 +29,7 @@
 //                 </button>
 //                 <button
 //                   className="text-red-600 font-medium"
-//                   onClick={() => deleteTransaction(t.id)}
+//                   onClick={() => deleteTransaction(t._id)}
 //                 >
 //                   Delete
 //                 </button>
@@ -48,8 +48,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Edit2, Save, Trash2, X } from "lucide-react";
 import { useState } from "react";
+import { useTransaction } from "../context/TransactionContext";
 
-function TransactionList({ transactions, deleteTransaction, editTransaction }) {
+function TransactionList() {
+  const { transactions, deleteTransaction, editTransaction } = useTransaction();
   return (
     <Card className="main-container">
       <CardHeader>
@@ -67,7 +69,7 @@ function TransactionList({ transactions, deleteTransaction, editTransaction }) {
         ) : (
           transactions.map((item) => (
             <TransactionItem
-              key={item.id}
+              key={item._id}
               item={item}
               deleteTransaction={deleteTransaction}
               editTransaction={editTransaction}
@@ -89,7 +91,7 @@ function TransactionItem({ item, deleteTransaction, editTransaction }) {
   const handleEdit = (e) => {
     e.preventDefault();
 
-    editTransaction(item.id, {
+    editTransaction(item._id, {
       amount: parseFloat(amount),
       description,
       type,
@@ -107,7 +109,7 @@ function TransactionItem({ item, deleteTransaction, editTransaction }) {
       <CardContent className="p-6">
         {isEditing ? (
           <form onSubmit={handleEdit} className="main-container">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="gr_id gr_id-cols-1 md:gr_id-cols-4 gap-4">
               <div>
                 <label>Amount</label>
                 <Input
@@ -141,7 +143,7 @@ function TransactionItem({ item, deleteTransaction, editTransaction }) {
               <div>
                 <label>Category</label>
                 <select
-                  id="category"
+                  _id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
@@ -207,13 +209,13 @@ function TransactionItem({ item, deleteTransaction, editTransaction }) {
                   ${item.amount.toLocaleString()}
                 </span>
                 <span className="sub-text-small" style={{ color: "#666" }}>
-                  {new Date(item.id).toLocaleDateString("en-US", {
+                  {new Date(item._id).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
                   })}
                   {" • "}
-                  {new Date(item.id).toLocaleTimeString("en-US", {
+                  {new Date(item._id).toLocaleTimeString("en-US", {
                     hour: "numeric",
                     minute: "numeric",
                     hour12: true,
@@ -227,7 +229,7 @@ function TransactionItem({ item, deleteTransaction, editTransaction }) {
                 <Edit2 className="sub-container-icon-medium" />
               </Button>
               <Button
-                onClick={() => deleteTransaction(item.id)}
+                onClick={() => deleteTransaction(item._id)}
                 variant="outline"
                 className="trash-button"
               >
